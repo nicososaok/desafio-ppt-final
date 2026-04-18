@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Desafío Final: Piedra, Papel o Tijera 🎮
 
 ¡Bienvenido al desafío final del Nivel 2! Esta es una aplicación **Full Stack** que permite jugar al clásico Piedra, Papel o Tijera en tiempo real contra otro jugador, utilizando una arquitectura distribuida.
@@ -32,4 +31,4 @@ Podés probar la aplicación funcionando acá:
 Realizado por [Nicolás Sosa](https://github.com/nicososaok)
 =======
 
->>>>>>> b62e34539388d7c62994e926dd066e756af3a7d6
+b62e34539388d7c62994e926dd066e756af3a7d6
