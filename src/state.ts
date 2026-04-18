@@ -1,7 +1,7 @@
 import { ref, onValue, update } from "firebase/database";
 import { rtdb } from "./rtdb";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://desafio-ppt-final.onrender.com";
 
 type Jugada = "piedra" | "papel" | "tijera";
 
