@@ -1,12 +1,19 @@
 import * as admin from "firebase-admin";
-import * as key from "./key.json";
 
-const serviceAccount = JSON.parse(JSON.stringify(key));
+let serviceAccount;
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://desafio-ppt-final-default-rtdb.firebaseio.com"
-});
+if (process.env.FIREBASE_CONFIG) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
+} else {
+  serviceAccount = require("./key.json");
+}
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://desafio-ppt-final-default-rtdb.firebaseio.com"
+  });
+}
 
 const firestore = admin.firestore();
 const rtdb = admin.database();
