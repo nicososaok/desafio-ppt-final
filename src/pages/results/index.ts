@@ -1,5 +1,4 @@
 import { state } from "../../state";
-
 import * as bgVerde from "url:../../assets/Rectangle-verde.svg";
 import * as bgRojo from "url:../../assets/Rectangle-rojo.svg";
 import * as starVerde from "url:../../assets/star-green.svg";
@@ -9,10 +8,7 @@ import * as textPerdiste from "url:../../assets/perdiste.svg";
 
 class ResultsPage extends HTMLElement {
   goTo: any;
-
-  connectedCallback() {
-    this.render();
-  }
+  connectedCallback() { this.render(); }
 
   render() {
     const lastGame = state.getState().currentGame;
@@ -29,12 +25,11 @@ class ResultsPage extends HTMLElement {
           <img class="star-base" src="${starImg}" />
           <img class="result-text-img" src="${textImg}" />
         </div>
-
         <div class="score-board">
           <h2 class="score-title">Score</h2>
           <div class="score-info">
-            <p>Vos: ${score.yo}</p>
-            <p>Máquina: ${score.computadora}</p>
+            <p>${score.player.nombre} ${score.player.score}</p>
+            <p>${score.opponent.nombre} ${score.opponent.score}</p>
           </div>
         </div>
 
@@ -44,64 +39,37 @@ class ResultsPage extends HTMLElement {
 
     const style = document.createElement("style");
     style.textContent = `
-      .results-screen {
-        height: 100vh;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-        background-image: url("${bgImg}");
-        background-size: cover;
-        background-position: center;
-        position: fixed; /* Asegura que tape el fondo anterior completamente */
-        top: 0;
-        left: 0;
-      }
-
-      .result-container {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 260px;
-        height: 260px;
-      }
-
+      .results-screen { height: 100vh; height: 100dvh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; background-image: url("${bgImg}"); background-size: cover; position: fixed; top: 0; left: 0; padding: 20px; box-sizing: border-box; }
+      .result-container { position: relative; display: flex; justify-content: center; align-items: center; width: 250px; height: 250px; }
       .star-base { width: 100%; height: auto; }
-
-      .result-text-img {
-        position: absolute;
-        width: 60%;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-      .score-board {
-        background: #FFFFFF;
-        border: 10px solid #000000;
-        border-radius: 10px;
-        width: 260px;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-
-      .score-title { margin: 0 0 10px 0; font-size: 55px; text-align: center; }
-      .score-info { font-size: 45px; text-align: right; }
+      .result-text-img { position: absolute; width: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+      .score-board { background: #FFFFFF; border: 8px solid #000000; border-radius: 10px; width: 100%; max-width: 230px; padding: 15px; box-sizing: border-box; }
+      .score-title { margin: 0 0 10px 0; font-size: 45px; text-align: center; font-family: 'Odibee Sans', cursive; }
+      .score-info { font-size: 30px; text-align: center; font-family: 'Odibee Sans', cursive; }
       .score-info p { margin: 5px 0; }
+      .return-btn { width: 100%; max-width: 322px; height: 87px; font-size: 45px; }
 
-      .return-btn { width: 322px; height: 87px; }
+      @media (max-width: 768px) {
+        .results-screen { justify-content: space-between; padding: 40px 20px 100px 20px; }
+        .result-container { width: 200px; height: 200px; margin-top: 20px; }
+        .result-text-img { width: 45%; }
+        .score-board { max-width: 260px; }
+        .score-title { font-size: 35px; }
+        .score-info { font-size: 25px; }
+        .return-btn { height: 70px; font-size: 35px; }
+      }
     `;
     this.appendChild(style);
 
     this.querySelector(".return-btn")?.addEventListener("click", () => {
-      this.goTo("/instructions");
+      state.restartGame(() => {
+        this.goTo("/instructions");
+      });
     });
   }
 }
 
 customElements.define("results-page", ResultsPage);
-
 export function initResults(params) {
   const page = document.createElement("results-page") as any;
   page.goTo = params.goTo;

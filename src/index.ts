@@ -8,9 +8,8 @@ import "./pages/play/index";
 import "./pages/results/index";
 
 (function () {
-  const rootElement = document.querySelector("#root");
-
   state.init();
+  const rootElement = document.querySelector("#root");
 
   if(rootElement) {
     initRouter(rootElement);
